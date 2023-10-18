@@ -1,7 +1,7 @@
 Sops PHP wrapper libary
 ==============
 
-[https://github.com/getsops/sops](SOPS) is an editor of encrypted files that supports YAML, JSON, ENV, INI and BINARY formats and encrypts with AWS KMS, GCP KMS, Azure Key Vault, age, and PGP.
+[SOPS](https://github.com/getsops/sops) is an editor of encrypted files that supports YAML, JSON, ENV, INI and BINARY formats and encrypts with AWS KMS, GCP KMS, Azure Key Vault, age, and PGP.
 
 This repository provides a SOPS wrapper PHP library for PHP applications.
 
