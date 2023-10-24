@@ -30,8 +30,8 @@ You can use the `bin/sops-php` CLI application to run commands for encryption/de
 
 The application needs a couple of configuration directives to work:
 
-* install SOPS (https://github.com/getsops/sops)
-* age or other encryption tool + key
+* Install SOPS (https://github.com/getsops/sops)
+* [Age](https://age-encryption.org) or other encryption tool + key
 
 ### Example commands
 
