@@ -22,12 +22,12 @@ class Sops
     {
 
         if (!file_exists($filePath)) {
-            throw new \RuntimeException(sprintf('File not found to encrypt. %s', $filePath));
+            throw new \RuntimeException(sprintf('File not found to encrypt. `%s`', $filePath));
         }
 
         $targetPath = $this->genEncryptPath($filePath);
 
-        $cmd = "sops -e --age " . $key . " " . $filePath . " > " . $targetPath;
+        $cmd = "sops -e --" . $method ." ". $key . " " . $filePath . " > " . $targetPath;
 
         $process = Process::fromShellCommandline($cmd);
         $process->run(null, []);
@@ -43,7 +43,7 @@ class Sops
     {
 
         if (!file_exists($filePath)) {
-            throw new \RuntimeException(sprintf('File not found to decrypt. %s', $filePath));
+            throw new \RuntimeException(sprintf('File not found to decrypt. `%s`', $filePath));
         }
 
         $targetPath = $this->genDecryptPath($filePath);
