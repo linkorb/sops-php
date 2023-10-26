@@ -1,6 +1,6 @@
 <?php
 
-namespace LinkORB\Shipyard;
+namespace LinkORB\Component\Sops;
 
 class Sops
 {

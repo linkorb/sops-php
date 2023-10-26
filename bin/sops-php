@@ -19,8 +19,8 @@ require $loader;
 
 $application = new Application('Sops PHP Wrapper', '0.0.1');
 $application->setCatchExceptions(true);
-$application->add(new \LinkORB\Shipyard\Command\EncryptCommand());
-$application->add(new \LinkORB\Shipyard\Command\DecryptCommand());
+$application->add(new \LinkORB\Component\Sops\Command\EncryptCommand());
+$application->add(new \LinkORB\Component\Sops\Command\DecryptCommand());
 
 $application->run();
 ?>

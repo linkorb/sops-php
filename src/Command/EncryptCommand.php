@@ -1,13 +1,13 @@
 <?php
 
-namespace LinkORB\Shipyard\Command;
+namespace LinkORB\Component\Sops\Command;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use LinkORB\Shipyard\Sops as SopsWrapper;
+use LinkORB\Component\Sops\Sops as SopsWrapper;
 
 class EncryptCommand extends Command
 {

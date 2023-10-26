@@ -26,7 +26,7 @@
 	},
 	"autoload": {
 		"psr-4": {
-			"LinkORB\\Shipyard\\": "src/"
+			"LinkORB\\Component\\Sops\\": "src/"
 		}
 	},
 	"bin": [
