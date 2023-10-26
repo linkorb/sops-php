@@ -2,6 +2,10 @@
 
 namespace LinkORB\Component\Sops;
 
+use Symfony\Component\Process\Exception\ProcessFailedException;
+use Symfony\Component\Process\Process;
+use Symfony\Component\Process\ExecutableFinder;
+
 class Sops
 {
 
@@ -23,10 +27,14 @@ class Sops
 
         $targetPath = $this->genEncryptPath($filePath);
 
-        $cmd = $this->sopscmd . " -e --age " . $key . " " . $filePath . " > " . $targetPath . " 2>&1";
-        $return = shell_exec($cmd);
-        if ($return) {
-            throw new \RuntimeException($return);
+        $cmd = "sops -e --age " . $key . " " . $filePath . " > " . $targetPath;
+
+        $process = Process::fromShellCommandline($cmd);
+        $process->run(null, []);
+
+        // executes after the command finishes
+        if (!$process->isSuccessful()) {
+            throw new ProcessFailedException($process);
         }
         return TRUE;
     }
@@ -40,11 +48,16 @@ class Sops
 
         $targetPath = $this->genDecryptPath($filePath);
 
-        $cmd = $this->sopscmd . " -d " . $filePath . " > " . $targetPath . " 2>&1";
-        $return = shell_exec($cmd);
-        if ($return) {
-            throw new \RuntimeException($return);
+        $cmd = $this->sopscmd . " -d " . $filePath . " > " . $targetPath;
+
+        $process = Process::fromShellCommandline($cmd);
+        $process->run(null, []);
+
+        // executes after the command finishes
+        if (!$process->isSuccessful()) {
+            throw new ProcessFailedException($process);
         }
+        return TRUE;
     }
 
     private function genEncryptPath($srcPath)
@@ -64,7 +77,8 @@ class Sops
 
     private function commandExist($cmd)
     {
-        $return = shell_exec(sprintf("which %s", escapeshellarg($cmd)));
-        return !empty($return);
+        $executableFinder = new ExecutableFinder();
+        $return = $executableFinder->find($cmd);
+        return $return;
     }
 }
