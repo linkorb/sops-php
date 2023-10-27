@@ -17,19 +17,19 @@ class EncryptCommand extends Command
             ->setName('sops:encrypt')
             ->setDescription('Encrypt a YAML, JSON, ENV, INI or BINARY file.')
             ->addArgument('filepath', InputArgument::REQUIRED, 'Filepath to encrypt')
-            ->addOption('key', 'k', InputOption::VALUE_REQUIRED, 'Public key string for encryption')
-            ->addOption('method', 'm', InputOption::VALUE_REQUIRED, 'Method of encryption');
+            ->addOption('key', 'k', InputOption::VALUE_OPTIONAL, 'Public key string for encryption')
+            ->addOption('method', 'm', InputOption::VALUE_OPTIONAL, 'Method of encryption');
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $filepath = $input->getArgument('filepath');
         $method = $input->getOption('method') ? $input->getOption('method'): 'age';
-        $key = $input->getOption('key');
+        $key = $input->getOption('key') ? $input->getOption('key'): False;
 
         $output->writeln("<info>Encrypt `$filepath` with `$method`</info>");
         $sops = new SopsWrapper();
-        $data = $sops->encrypt($key, $filepath, $method);
+        $sops->encrypt($key, $filepath, $method);
         return Command::SUCCESS;
     }
 }

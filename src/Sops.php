@@ -27,7 +27,14 @@ class Sops
 
         $targetPath = $this->genEncryptPath($filePath);
 
-        $cmd = "sops -e --" . $method ." ". $key . " " . $filePath . " > " . $targetPath;
+        if( $key ) {
+            $cmd = "sops -e --" . $method ." ". $key . " " . $filePath . " > " . $targetPath;
+        } else {
+            if(getenv('SOPS_AGE_RECIPIENTS') === False) {
+                throw new \RuntimeException('You need to set the environment variable `SOPS_AGE_RECIPIENTS` to use age encryption.');
+            }
+            $cmd = "sops -e " . $filePath . " > " . $targetPath;
+        }
 
         $process = Process::fromShellCommandline($cmd);
         $process->run(null, []);
