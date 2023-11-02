@@ -24,12 +24,12 @@ class EncryptCommand extends Command
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $filepath = $input->getArgument('filepath');
-        $method = $input->getOption('method') ? $input->getOption('method'): 'age';
-        $key = $input->getOption('key') ? $input->getOption('key'): False;
+        $method = $input->getOption('method') ? $input->getOption('method') : 'age';
+        $key = $input->getOption('key') ? $input->getOption('key') : False;
 
         $output->writeln("<info>Encrypt `$filepath` with `$method`</info>");
         $sops = new SopsWrapper();
-        $sops->encrypt($key, $filepath, $method);
+        $sops->encrypt($filepath, $key, $method);
         return Command::SUCCESS;
     }
 }

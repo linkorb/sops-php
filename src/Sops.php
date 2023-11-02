@@ -11,6 +11,9 @@ class Sops
 
     private $sopscmd = 'sops';
 
+    /**
+     * Constractor checks if the `sops` command exists on OS.
+     */
     public function __construct()
     {
         if (!$this->commandExist($this->sopscmd)) {
@@ -18,19 +21,28 @@ class Sops
         }
     }
 
-    public function encrypt($key, $filePath, $method = 'age')
-    {
 
+    /**
+     * Encrypt a file with a provided key and method.
+     * The encryption will be done with `age` method and default `key` saved on OS, in the case $key = NULL
+     * In the current version, `age` method was only provided.
+     * @param string $filePath The string to a file path to encrypt.
+     * @param string $key      The string to a key for encryption. Default `NULL`
+     * @param string $method   The string to a method for encryption. Default `age`
+     * @return bool True if the encryption is successful.
+     */
+    public function encrypt($filePath, $key = NULL, $method = 'age')
+    {
         if (!file_exists($filePath)) {
             throw new \RuntimeException(sprintf('File not found to encrypt. `%s`', $filePath));
         }
 
         $targetPath = $this->genEncryptPath($filePath);
 
-        if( $key ) {
-            $cmd = "sops -e --" . $method ." ". $key . " " . $filePath . " > " . $targetPath;
+        if ($key) {
+            $cmd = "sops -e --" . $method . " " . $key . " " . $filePath . " > " . $targetPath;
         } else {
-            if(getenv('SOPS_AGE_RECIPIENTS') === False) {
+            if (getenv('SOPS_AGE_RECIPIENTS') === False) {
                 throw new \RuntimeException('You need to set the environment variable `SOPS_AGE_RECIPIENTS` to use age encryption.');
             }
             $cmd = "sops -e " . $filePath . " > " . $targetPath;
@@ -46,6 +58,11 @@ class Sops
         return TRUE;
     }
 
+    /**
+     * Decrypt a file with a default key and method on OS.
+     * @param string $filePath The string to a file path to decrypt.
+     * @return bool True if the decryption is successful.
+     */
     public function decrypt($filePath)
     {
 
