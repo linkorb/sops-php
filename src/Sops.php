@@ -26,10 +26,10 @@ class Sops
      * Encrypt a file with a provided key and method.
      * The encryption will be done with `age` method and default `key` saved on OS, in the case $key = NULL
      * In the current version, `age` method was only provided.
-     * @param string $filePath The string to a file path to encrypt.
-     * @param string $key      The string to a key for encryption. Default `NULL`
-     * @param string $method   The string to a method for encryption. Default `age`
-     * @return bool True if the encryption is successful.
+     * @param String $filePath The string to a file path to encrypt.
+     * @param String $key      The string to a key for encryption. Default `NULL`
+     * @param String $method   The string to a method for encryption. Default `age`
+     * @return Boolean True if the encryption is successful.
      */
     public function encrypt($filePath, $key = NULL, $method = 'age')
     {
@@ -60,8 +60,8 @@ class Sops
 
     /**
      * Decrypt a file with a default key and method on OS.
-     * @param string $filePath The string to a file path to decrypt.
-     * @return bool True if the decryption is successful.
+     * @param String $filePath The string to a file path to decrypt.
+     * @return Boolean True if the decryption is successful.
      */
     public function decrypt($filePath)
     {
